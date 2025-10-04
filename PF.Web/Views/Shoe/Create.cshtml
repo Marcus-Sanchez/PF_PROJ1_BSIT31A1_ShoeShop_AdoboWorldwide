@@ -1,0 +1,151 @@
+@model ShoeInventoryApp.Models.Shoe
+
+@{
+    ViewData["Title"] = "Add New Shoe - AdoboWorldwide";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h1 class="mb-1">
+            <i class="fas fa-plus-circle me-2 text-primary"></i>Add New Shoe
+        </h1>
+        <p class="text-muted mb-0">Expand your footwear inventory</p>
+    </div>
+    <div>
+        <a class="btn btn-secondary" asp-action="Index">
+            <i class="fas fa-arrow-left me-1"></i>Back to Inventory
+        </a>
+    </div>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-shoe-prints me-2"></i>Shoe Details
+            </div>
+            <div class="card-body">
+                <form asp-action="Create" method="post">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label asp-for="Name" class="form-label">
+                                    <i class="fas fa-shoe-prints me-1"></i>Shoe Name
+                                </label>
+                                <input asp-for="Name" class="form-control" placeholder="Enter shoe name..." />
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                                <div class="form-text">Enter the specific model or name of the shoe</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label asp-for="Brand" class="form-label">
+                                    <i class="fas fa-tag me-1"></i>Brand
+                                </label>
+                                <input asp-for="Brand" class="form-control" placeholder="Enter brand name..." list="brandSuggestions" />
+                                <datalist id="brandSuggestions">
+                                    <option value="Nike"></option>
+                                    <option value="Adidas"></option>
+                                    <option value="Puma"></option>
+                                    <option value="Converse"></option>
+                                    <option value="Vans"></option>
+                                    <option value="New Balance"></option>
+                                    <option value="Reebok"></option>
+                                    <option value="Under Armour"></option>
+                                </datalist>
+                                <span asp-validation-for="Brand" class="text-danger"></span>
+                                <div class="form-text">Select from suggestions or type a custom brand</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label asp-for="Price" class="form-label">
+                                    <i class="fas fa-dollar-sign me-1"></i>Price (PHP)
+                                </label>
+                                <div class="input-group">
+                                    <span class="input-group-text">₱</span>
+                                    <input asp-for="Price" class="form-control" placeholder="0.00" step="0.01" min="0" />
+                                </div>
+                                <span asp-validation-for="Price" class="text-danger"></span>
+                                <div class="form-text">Enter the price in Philippine Pesos</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">
+                                    <i class="fas fa-info-circle me-1"></i>Price Category
+                                </label>
+                                <div id="priceCategory" class="alert alert-info">
+                                    <span id="categoryText">Enter a price to see category</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <a class="btn btn-secondary me-md-2" asp-action="Index">
+                            <i class="fas fa-times me-1"></i>Cancel
+                        </a>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save me-1"></i>Save Shoe
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        $(document).ready(function() {
+            // Price category indicator
+            $('#Price').on('input', function() {
+                var price = parseFloat($(this).val()) || 0;
+                var category = '';
+                var categoryClass = 'alert-info';
+                
+                if (price === 0) {
+                    category = 'Enter a price to see category';
+                } else if (price < 1000) {
+                    category = 'Budget-Friendly (Under ₱1,000)';
+                    categoryClass = 'alert-success';
+                } else if (price < 3000) {
+                    category = 'Mid-Range (₱1,000 - ₱3,000)';
+                    categoryClass = 'alert-warning';
+                } else if (price < 8000) {
+                    category = 'Premium (₱3,000 - ₱8,000)';
+                    categoryClass = 'alert-primary';
+                } else {
+                    category = 'Luxury (₱8,000+)';
+                    categoryClass = 'alert-danger';
+                }
+                
+                $('#priceCategory')
+                    .removeClass('alert-info alert-success alert-warning alert-primary alert-danger')
+                    .addClass(categoryClass);
+                $('#categoryText').text(category);
+            });
+            
+            // Auto-format brand name (capitalize first letter)
+            $('#Brand').on('blur', function() {
+                var brand = $(this).val();
+                if (brand) {
+                    $(this).val(brand.charAt(0).toUpperCase() + brand.slice(1));
+                }
+            });
+            
+            // Auto-format shoe name (capitalize first letter)
+            $('#Name').on('blur', function() {
+                var name = $(this).val();
+                if (name) {
+                    $(this).val(name.charAt(0).toUpperCase() + name.slice(1));
+                }
+            });
+        });
+    </script>
+}

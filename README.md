@@ -1,18 +1,20 @@
-# 📦 Shoe Inventory Management System - Assignment Instructions
+# 🚀 AdoboWorldwide Shoe Shop - Inventory Management System
 
-## 🎯 **MAIN OBJECTIVE**
+![AdoboWorldwide Logo](https://img.shields.io/badge/AdoboWorldwide-Shoe%20Shop-blue?style=for-the-badge&logo=nike)
 
-Build a **Shoe Inventory Management System** using ASP.NET Core MVC with a **3-layer architecture**. Your team will create an admin portal for managing shoe inventory operations including stock tracking, purchase orders, and pull-outs.
+## 🎯 **PROJECT OVERVIEW**
 
-### **What You're Building:**
-A **comprehensive shoe inventory management system** with:
-- 📦 **Inventory Management**: Add shoes, track stock levels, manage color variations
-- 📝 **Purchase Orders**: Create orders to restock inventory from suppliers
-- 📤 **Pull-Outs**: Remove items from inventory with reasons (damaged, returned, promotional, etc.)
-- 📈 **Reports**: Inventory dashboard, low stock alerts, transaction history
-- 🔐 **Authentication**: Admin login with role-based access (Admin, Manager, Staff)
-- 📱 **Responsive Design**: Professional admin interface that works on desktop and mobile
-- 🎯 **Traditional MVC**: Server-side rendering with Razor views
+**AdoboWorldwide Shoe Shop** is a modern, comprehensive **Shoe Inventory Management System** built with ASP.NET Core MVC using a **3-layer architecture**. This professional admin portal manages all shoe inventory operations including stock tracking, purchase orders, and inventory management with a beautiful, responsive user interface.
+
+### **What We've Built:**
+A **premium shoe inventory management system** featuring:
+- 📦 **Advanced Inventory Management**: Intelligent shoe tracking, stock management, color variations
+- 📝 **Smart Purchase Orders**: Streamlined ordering system with supplier management
+- 📤 **Professional Pull-Outs**: Comprehensive inventory removal tracking with approval workflows
+- 📈 **Dynamic Reports**: Real-time dashboard, automated low stock alerts, comprehensive analytics
+- 🔐 **Secure Authentication**: Role-based access control (Admin, Manager, Staff)
+- 📱 **Modern Responsive Design**: Professional AdoboWorldwide-branded interface
+- 🎯 **Clean MVC Architecture**: Well-structured server-side rendering with Razor views
 
 ---
 

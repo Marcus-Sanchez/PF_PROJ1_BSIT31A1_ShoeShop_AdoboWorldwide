@@ -1,0 +1,17 @@
+﻿@model ShoeInventoryApp.Models.Shoe
+
+<h2>Shoe Details</h2>
+
+<div>
+    <h4>@Model.Name</h4>
+    <dl class="row">
+        <dt class="col-sm-2">Brand</dt>
+        <dd class="col-sm-10">@Model.Brand</dd>
+
+        <dt class="col-sm-2">Price</dt>
+        <dd class="col-sm-10">@Model.Price</dd>
+    </dl>
+</div>
+
+<a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Edit</a>
+<a asp-action="Index" class="btn btn-secondary">Back to List</a>

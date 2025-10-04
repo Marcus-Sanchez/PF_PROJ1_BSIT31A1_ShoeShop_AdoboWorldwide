@@ -1,0 +1,14 @@
+﻿@model ShoeInventoryApp.Models.PurchaseOrder
+
+<h2>Purchase Order Details</h2>
+
+<dl class="row">
+    <dt class="col-sm-2">Order Date</dt>
+    <dd class="col-sm-10">@Model.OrderDate.ToShortDateString()</dd>
+
+    <dt class="col-sm-2">Supplier</dt>
+    <dd class="col-sm-10">@Model.SupplierId</dd>
+</dl>
+
+<a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Edit</a>
+<a asp-action="Index" class="btn btn-secondary">Back to List</a>

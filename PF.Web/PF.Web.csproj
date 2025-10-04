@@ -1,0 +1,34 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>PF.Web</RootNamespace>
+    <AssemblyTitle>AdoboWorldwide Shoe Shop Inventory System</AssemblyTitle>
+    <Product>AdoboWorldwide Shoe Shop</Product>
+    <Company>AdoboWorldwide</Company>
+    <Description>Premium Footwear Inventory Management System for AdoboWorldwide Shoe Shop</Description>
+    <Copyright>Copyright © 2025 AdoboWorldwide. All rights reserved.</Copyright>
+    <Version>1.0.0</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PF.Service\PF.Service.csproj" />
+    <ProjectReference Include="..\PF.Repository\PF.Repository.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- EF Core packages -->
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.9">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="9.0.9" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.9">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+
+</Project>

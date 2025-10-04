@@ -1,0 +1,185 @@
+@model IEnumerable<ShoeInventoryApp.Models.Shoe>
+
+@{
+    ViewData["Title"] = "Shoe Inventory - AdoboWorldwide";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h1 class="mb-1">
+            <i class="fas fa-shoe-prints me-2 text-primary"></i>Shoe Inventory
+        </h1>
+        <p class="text-muted mb-0">Manage your footwear collection</p>
+    </div>
+    <div>
+        <a class="btn btn-primary" asp-action="Create">
+            <i class="fas fa-plus me-1"></i>Add New Shoe
+        </a>
+        <a class="btn btn-secondary ms-2" asp-controller="Home" asp-action="Index">
+            <i class="fas fa-arrow-left me-1"></i>Back to Dashboard
+        </a>
+    </div>
+</div>
+
+@if (Model.Any())
+{
+    <!-- Search and Filter Bar -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-search"></i></span>
+                        <input type="text" class="form-control" id="searchInput" placeholder="Search shoes by name or brand...">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <select class="form-select" id="brandFilter">
+                        <option value="">All Brands</option>
+                        @foreach (var brand in Model.Select(s => s.Brand).Distinct().OrderBy(b => b))
+                        {
+                            <option value="@brand">@brand</option>
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Summary Cards -->
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="card bg-primary text-white">
+                <div class="card-body text-center">
+                    <i class="fas fa-shoe-prints fa-2x mb-2"></i>
+                    <h4 class="card-title">@Model.Count()</h4>
+                    <p class="card-text">Total Shoes</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-success text-white">
+                <div class="card-body text-center">
+                    <i class="fas fa-tags fa-2x mb-2"></i>
+                    <h4 class="card-title">@Model.Select(s => s.Brand).Distinct().Count()</h4>
+                    <p class="card-text">Brands</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-warning text-white">
+                <div class="card-body text-center">
+                    <i class="fas fa-dollar-sign fa-2x mb-2"></i>
+                    <h4 class="card-title">₱@Model.Average(s => s.Price).ToString("N0")</h4>
+                    <p class="card-text">Avg Price</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-info text-white">
+                <div class="card-body text-center">
+                    <i class="fas fa-star fa-2x mb-2"></i>
+                    <h4 class="card-title">₱@Model.Max(s => s.Price).ToString("N0")</h4>
+                    <p class="card-text">Highest Price</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Shoes Table -->
+    <div class="card">
+        <div class="card-header">
+            <i class="fas fa-list me-2"></i>All Shoes (@Model.Count() items)
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover" id="shoesTable">
+                    <thead>
+                        <tr>
+                            <th><i class="fas fa-shoe-prints me-1"></i>Name</th>
+                            <th><i class="fas fa-tag me-1"></i>Brand</th>
+                            <th><i class="fas fa-dollar-sign me-1"></i>Price</th>
+                            <th><i class="fas fa-cogs me-1"></i>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var shoe in Model.OrderBy(s => s.Brand).ThenBy(s => s.Name))
+                        {
+                            <tr data-name="@shoe.Name.ToLower()" data-brand="@shoe.Brand.ToLower()">
+                                <td>
+                                    <strong>@shoe.Name</strong>
+                                </td>
+                                <td>
+                                    <span class="badge badge-primary">@shoe.Brand</span>
+                                </td>
+                                <td>
+                                    <strong class="text-success">₱@shoe.Price.ToString("N2")</strong>
+                                </td>
+                                <td>
+                                    <div class="btn-group" role="group">
+                                        <a class="btn btn-info btn-sm" asp-action="Details" asp-route-id="@shoe.Id" title="View Details">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                        <a class="btn btn-warning btn-sm" asp-action="Edit" asp-route-id="@shoe.Id" title="Edit">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@shoe.Id" 
+                                           onclick="return confirm('Are you sure you want to delete this shoe?')" title="Delete">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <!-- Empty State -->
+    <div class="card">
+        <div class="card-body text-center py-5">
+            <i class="fas fa-shoe-prints fa-5x text-muted mb-4"></i>
+            <h3 class="text-muted">No Shoes Found</h3>
+            <p class="text-muted mb-4">Start building your inventory by adding your first shoe.</p>
+            <a class="btn btn-primary btn-lg" asp-action="Create">
+                <i class="fas fa-plus me-2"></i>Add Your First Shoe
+            </a>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            // Search functionality
+            $('#searchInput').on('keyup', function() {
+                var value = $(this).val().toLowerCase();
+                filterTable();
+            });
+            
+            // Brand filter
+            $('#brandFilter').on('change', function() {
+                filterTable();
+            });
+            
+            function filterTable() {
+                var searchValue = $('#searchInput').val().toLowerCase();
+                var brandValue = $('#brandFilter').val().toLowerCase();
+                
+                $('#shoesTable tbody tr').filter(function() {
+                    var nameMatch = $(this).data('name').indexOf(searchValue) > -1;
+                    var brandMatch = brandValue === '' || $(this).data('brand').indexOf(brandValue) > -1;
+                    $(this).toggle(nameMatch && brandMatch);
+                });
+                
+                // Update visible count
+                var visibleCount = $('#shoesTable tbody tr:visible').length;
+                $('.card-header').html('<i class="fas fa-list me-2"></i>All Shoes (' + visibleCount + ' items)');
+            }
+        });
+    </script>
+}

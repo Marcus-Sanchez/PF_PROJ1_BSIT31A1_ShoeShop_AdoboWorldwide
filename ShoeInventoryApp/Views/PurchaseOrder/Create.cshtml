@@ -1,0 +1,25 @@
+﻿@model ShoeInventoryApp.Models.PurchaseOrder
+
+@{
+    ViewData["Title"] = "Add New Purchase Order";
+}
+
+<h1>Add New Purchase Order</h1>
+
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label asp-for="OrderDate"></label>
+        <input asp-for="OrderDate" type="date" class="form-control" />
+        <span asp-validation-for="OrderDate" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="SupplierId">Supplier</label>
+        <select asp-for="SupplierId" asp-items="ViewBag.Suppliers" class="form-control"></select>
+    </div>
+    <div class="form-group">
+        <label asp-for="TotalAmount"></label>
+        <input asp-for="TotalAmount" class="form-control" />
+        <span asp-validation-for="TotalAmount" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>
